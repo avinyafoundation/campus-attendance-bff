@@ -101,4 +101,22 @@ service / on new http:Listener(9091) {
                 ":: Detail: " + updateAvinyaTypeResponse.detail().toString());
         }
     }
+
+    resource function get activity/[string name]() returns Activity|error {
+        GetActivityResponse|graphql:ClientError getActivityResponse = globalDataClient->getActivity(name);
+        if(getActivityResponse is GetActivityResponse) {
+            Activity|error activity_record = getActivityResponse.activity.cloneWithType(Activity);
+            if(activity_record is Activity) {
+                return activity_record;
+            } else {
+                log:printError("Error while processing Application record received", activity_record);
+                return error("Error while processing Application record received: " + activity_record.message() + 
+                    ":: Detail: " + activity_record.detail().toString());
+            }
+        } else {
+            log:printError("Error while creating application", getActivityResponse);
+            return error("Error while creating application: " + getActivityResponse.message() + 
+                ":: Detail: " + getActivityResponse.detail().toString());
+        }
+    }
 }

@@ -4,7 +4,7 @@ public type Activity record {
     string? created?;
     string? name?;
     int? avinya_type_id?;
-    int[]? child_activities?;
+    Activity[]? child_activities?;
     string? description?;
     int? id?;
     string? updated?;
