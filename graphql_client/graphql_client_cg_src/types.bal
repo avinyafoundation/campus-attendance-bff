@@ -1,3 +1,47 @@
+public type Activity record {
+    string? notes?;
+    int[]? parent_activities?;
+    string? created?;
+    string? name?;
+    int? avinya_type_id?;
+    int[]? child_activities?;
+    string? description?;
+    int? id?;
+    string? updated?;
+    string? record_type?;
+};
+
+public type ActivityInstance record {
+    string? notes?;
+    string? created?;
+    int? weekly_sequence?;
+    string? end_time?;
+    string? description?;
+    int? daily_sequence?;
+    string? record_type?;
+    int? monthly_sequence?;
+    string? start_time?;
+    int? activity_id?;
+    string? name?;
+    int? id?;
+    string? updated?;
+    int? place_id?;
+};
+
+public type ActivityParticipant record {
+    string? end_date?;
+    int? activity_instance_id?;
+    string? role?;
+    string? notes?;
+    string? created?;
+    int? organization_id?;
+    int? id?;
+    string? updated?;
+    string? record_type?;
+    int? person_id?;
+    string? start_date?;
+};
+
 public type ActivityParticipantAttendance record {
     int? activity_instance_id?;
     string? created?;
@@ -7,6 +51,18 @@ public type ActivityParticipantAttendance record {
     string? record_type?;
     int? person_id?;
     string? sign_out_time?;
+};
+
+public type ActivitySequencePlan record {
+    int? sequence_number?;
+    int? timeslot_number?;
+    string? created?;
+    int? organization_id?;
+    int? activity_id?;
+    int? id?;
+    string? updated?;
+    string? record_type?;
+    int? person_id?;
 };
 
 public type Address record {
@@ -47,6 +103,20 @@ public type Application record {
     int? id?;
     string? record_type?;
     int? person_id?;
+};
+
+public type Asset record {
+    string? registration_number?;
+    string? created?;
+    string? name?;
+    int? avinya_type_id?;
+    string? description?;
+    string? model?;
+    string? serial_number?;
+    int? id?;
+    string? updated?;
+    string? record_type?;
+    string? manufacturer?;
 };
 
 public type AvinyaType record {
@@ -138,6 +208,17 @@ public type Prospect record {
     string? email?;
 };
 
+public type Vacancy record {
+    int? organization_id?;
+    string? name?;
+    int? avinya_type_id?;
+    string? description?;
+    int? evaluation_cycle_id?;
+    int? head_count?;
+    int? id?;
+    string? record_type?;
+};
+
 public type GetAvinyaTypesResponse record {|
     map<json?> __extensions?;
     record {|
@@ -175,4 +256,56 @@ public type UpdateAvinyaTypeResponse record {|
         string? focus;
         int? level;
     |}? update_avinya_type;
+|};
+
+public type GetActivityResponse record {|
+    map<json?> __extensions?;
+    record {|
+        int? id;
+        string? name;
+        string? description;
+        string? notes;
+        record {|
+            int? id;
+            string? name;
+            string? description;
+            string? notes;
+            string? start_time;
+            string? end_time;
+            int? daily_sequence;
+            int? weekly_sequence;
+            int? monthly_sequence;
+        |}[]? activity_instances;
+        record {|
+            int? id;
+            string? name;
+            string? description;
+            string? notes;
+            record {|
+                int? id;
+                string? name;
+                string? description;
+                string? notes;
+                string? start_time;
+                string? end_time;
+                int? daily_sequence;
+                int? weekly_sequence;
+                int? monthly_sequence;
+            |}[]? activity_instances;
+            record {|
+                int? id;
+                int? sequence_number;
+                int? timeslot_number;
+                record {|
+                    int? id;
+                    record {|
+                        string name_en;
+                    |} name;
+                |}? organization;
+                record {|
+                    string? preferred_name;
+                |}? person;
+            |}[]? activity_sequence_plan;
+        |}[]? child_activities;
+    |}? activity;
 |};

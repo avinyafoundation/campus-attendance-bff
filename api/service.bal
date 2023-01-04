@@ -3,23 +3,23 @@ import ballerina/graphql;
 import ballerina/log;
 
 
-public function initClientConfig() returns http:ClientConfiguration{
-    http:ClientConfiguration _clientConig;
+public function initClientConfig() returns ConnectionConfig{
+    ConnectionConfig _clientConig = {};
     if (GLOBAL_DATA_USE_AUTH) {
-        _clientConig = { auth : {
+        _clientConig.oauth2ClientCredentialsGrantConfig =  {
             tokenUrl: CHOREO_TOKEN_URL,
             clientId:GLOBAL_DATA_CLIENT_ID,
             clientSecret:GLOBAL_DATA_CLIENT_SECRET
-        } };
+        };
     } else { 
-        _clientConig = {auth : {}};
+        _clientConig = {};
     }
     return _clientConig;
 }
 
 
-final GlobalDataClient globalDataClient = check new (GLOBAL_DATA_API_URL,
-    clientConfig = initClientConfig()
+final GraphqlClient globalDataClient = check new (GLOBAL_DATA_API_URL,
+    config = initClientConfig()
 );
 
 # A service representing a network-accessible API

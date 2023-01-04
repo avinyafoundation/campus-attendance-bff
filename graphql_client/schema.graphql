@@ -1,3 +1,16 @@
+input Activity {
+  record_type: String = ""
+  id: Int
+  name: String
+  description: String
+  avinya_type_id: Int
+  notes: String
+  created: String
+  updated: String
+  child_activities: [Int!]
+  parent_activities: [Int!]
+}
+
 type ActivityData {
   id: Int
   name: String
@@ -5,9 +18,26 @@ type ActivityData {
   avinya_type: AvinyaTypeData
   notes: String
   child_activities: [ActivityData!]
-  parent_activitys: [ActivityData!]
+  parent_activities: [ActivityData!]
   activity_sequence_plan: [ActivitySequencePlanData!]
   activity_instances: [ActivityInstanceData!]
+}
+
+input ActivityInstance {
+  record_type: String = ""
+  id: Int
+  activity_id: Int
+  name: String
+  place_id: Int
+  daily_sequence: Int
+  weekly_sequence: Int
+  monthly_sequence: Int
+  description: String
+  notes: String
+  start_time: String
+  end_time: String
+  created: String
+  updated: String
 }
 
 type ActivityInstanceData {
@@ -27,6 +57,20 @@ type ActivityInstanceData {
   activity_participants: [ActivityParticipantData!]
   activity_participant_attendances: [ActivityParticipantAttendanceData!]
   evaluations: [EvaluationData!]
+}
+
+input ActivityParticipant {
+  record_type: String = ""
+  id: Int
+  activity_instance_id: Int
+  person_id: Int
+  organization_id: Int
+  start_date: String
+  end_date: String
+  role: String
+  notes: String
+  created: String
+  updated: String
 }
 
 input ActivityParticipantAttendance {
@@ -59,6 +103,18 @@ type ActivityParticipantData {
   end_date: String
   role: String
   notes: String
+  created: String
+  updated: String
+}
+
+input ActivitySequencePlan {
+  record_type: String = ""
+  id: Int
+  activity_id: Int
+  sequence_number: Int
+  timeslot_number: Int
+  person_id: Int
+  organization_id: Int
   created: String
   updated: String
 }
@@ -137,6 +193,7 @@ input Application {
 }
 
 type ApplicationData {
+  id: Int
   applicant: PersonData
   vacancy: VacancyData
   application_date: String
@@ -148,6 +205,33 @@ type ApplicationStatusData {
   status: String
   updated: String
   is_terminal: Boolean
+}
+
+input Asset {
+  record_type: String = ""
+  id: Int
+  name: String
+  manufacturer: String
+  model: String
+  serial_number: String
+  registration_number: String
+  description: String
+  avinya_type_id: Int
+  created: String
+  updated: String
+}
+
+type AssetData {
+  id: Int
+  name: String
+  manufacturer: String
+  model: String
+  serial_number: String
+  registration_number: String
+  description: String
+  avinya_type: AvinyaTypeData
+  created: String
+  updated: String
 }
 
 input AvinyaType {
@@ -170,6 +254,7 @@ type AvinyaTypeData {
   foundation_type: String
   focus: String
   level: Int
+  description: String
 }
 
 type CityData {
@@ -218,6 +303,7 @@ type EvaluationCriteriaData {
 }
 
 type EvaluationData {
+  id: Int
   evaluatee_id: Int
   evaluator_id: Int
   evaluation_criteria_id: Int
@@ -244,6 +330,7 @@ type LocalizedName {
 type Mutation {
   add_avinya_type(avinya_type: AvinyaType!): AvinyaTypeData
   update_avinya_type(avinya_type: AvinyaType!): AvinyaTypeData
+  add_educator_applicant(person: Person!): PersonData
   add_student_applicant(person: Person!): PersonData
   add_student_applicant_consent(applicantConsent: ApplicantConsent!): ApplicantConsentData
   add_application(application: Application!): ApplicationData
@@ -254,7 +341,15 @@ type Mutation {
   add_attendance(attendance: ActivityParticipantAttendance!): ActivityParticipantAttendanceData
   add_empower_parent(person: Person!): PersonData
   update_application_status(applicationStatus: String!, applicationId: Int!): ApplicationStatusData
-  update_person_avinya_type(personId: Int!, newAvinyaId: Int!, transitionDate: String!): AvinyaTypeData
+  update_person_avinya_type(personId: Int!, newAvinyaId: Int!, transitionDate: String!): PersonData
+  add_activity(activity: Activity!): ActivityData
+  add_activity_sequence_plan(activitySequencePlan: ActivitySequencePlan!): ActivitySequencePlanData
+  add_activity_instance(activityInstance: ActivityInstance!): ActivityInstanceData
+  add_activity_participant(activityParticipant: ActivityParticipant!): ActivityParticipantData
+  update_attendance(attendanceId: Int!, sign_out_time: String!): ActivityParticipantAttendanceData
+  add_vacancy(vacancy: Vacancy!): VacancyData
+  add_person(person: Person!, avinya_type_id: Int): PersonData
+  add_asset(asset: Asset!): AssetData
 }
 
 input Organization {
@@ -408,6 +503,18 @@ type Query {
   application(person_id: Int!): ApplicationData
   student_applicant(jwt_sub_id: String): PersonData
   activity(name: String, id: Int): ActivityData
+  asset(id: Int!): AssetData
+}
+
+input Vacancy {
+  record_type: String = ""
+  id: Int
+  name: String
+  description: String
+  organization_id: Int
+  avinya_type_id: Int
+  evaluation_cycle_id: Int
+  head_count: Int
 }
 
 type VacancyData {

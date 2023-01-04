@@ -12,4 +12,4 @@ Copy queries and mutatons to relavant files pointed by graphql.config.yaml
 Generage Ballerina client:
 bal graphql -i graphql.config.yaml -o graphql_client_cg_src
 
-copy bal files within graphql_client_cg_src to Ballerian REST api project folder
+copy bal files within graphql_client_cg_src to Ballerina REST api project folder
