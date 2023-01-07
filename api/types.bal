@@ -1,6 +1,6 @@
 public type Activity record {
     string? notes?;
-    int[]? parent_activities?;
+    Activity[]? parent_activities?;
     string? created?;
     string? name?;
     int? avinya_type_id?;
