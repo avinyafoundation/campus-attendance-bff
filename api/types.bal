@@ -1,10 +1,10 @@
 public type Activity record {
     string? notes?;
-    Activity[]? parent_activities?;
+    int[]? parent_activities?;
     string? created?;
     string? name?;
     int? avinya_type_id?;
-    Activity[]? child_activities?;
+    int[]? child_activities?;
     string? description?;
     int? id?;
     string? updated?;
@@ -308,4 +308,15 @@ public type GetActivityResponse record {|
             |}[]? activity_sequence_plan;
         |}[]? child_activities;
     |}? activity;
+|};
+
+public type AddActivityAttendanceResponse record {|
+    map<json?> __extensions?;
+    record {|
+        int? id;
+        int? activity_instance_id;
+        string? sign_in_time;
+        string? sign_out_time;
+        string? created;
+    |}? add_attendance;
 |};

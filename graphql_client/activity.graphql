@@ -48,3 +48,14 @@ query getActivity($name: String!) {
         }
     }
 }
+
+ mutation addActivityAttendance($attendance: ActivityParticipantAttendance!)
+{
+    add_attendance(attendance:$attendance){
+        id
+        activity_instance_id
+        sign_in_time
+        sign_out_time
+        created
+    }
+}

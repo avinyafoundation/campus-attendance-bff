@@ -44,6 +44,7 @@ public type ConnectionConfig record {|
     graphql:ProxyConfig proxy?;
     # Enables the inbound payload validation functionality which provided by the constraint package. Enabled by default
     boolean validation = true;
+    # OAuth2 client configurations
     http:OAuth2ClientCredentialsGrantConfig oauth2ClientCredentialsGrantConfig?;
 |};
 

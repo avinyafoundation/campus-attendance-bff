@@ -309,3 +309,14 @@ public type GetActivityResponse record {|
         |}[]? child_activities;
     |}? activity;
 |};
+
+public type AddActivityAttendanceResponse record {|
+    map<json?> __extensions?;
+    record {|
+        int? id;
+        int? activity_instance_id;
+        string? sign_in_time;
+        string? sign_out_time;
+        string? created;
+    |}? add_attendance;
+|};
